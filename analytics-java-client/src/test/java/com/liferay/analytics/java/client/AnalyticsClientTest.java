@@ -33,7 +33,7 @@ public class AnalyticsClientTest {
 	@Test
 	public void testAnalyticsEventCreation() {
 		AnalyticsEventsMessage.Builder analyticsEventsMessageBuilder =
-			AnalyticsEventsMessage.builder();
+			new AnalyticsEventsMessage.Builder();
 
 		analyticsEventsMessageBuilder.analyticsKey("WXYZ");
 		analyticsEventsMessageBuilder.applicationId("AT");

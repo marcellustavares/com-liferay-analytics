@@ -42,46 +42,6 @@ public class AnalyticsEventsMessage implements Serializable {
 		return new AnalyticsEventsMessage.Builder();
 	}
 
-	public String getAnalyticsKey() {
-		return _analyticsKey;
-	}
-
-	public long getAnonymousUserId() {
-		return _anonymousUserId;
-	}
-
-	public String getApplicationId() {
-		return _applicationId;
-	}
-
-	public String getChannel() {
-		return _channel;
-	}
-
-	public String getClientIP() {
-		return _clientIP;
-	}
-
-	public Context getContext() {
-		return _context;
-	}
-
-	public List<Event> getEvents() {
-		return _events;
-	}
-
-	public String getMessageFormat() {
-		return _messageFormat;
-	}
-
-	public String getProtocolVersion() {
-		return _protocolVersion;
-	}
-
-	public String getUserAgent() {
-		return _userAgent;
-	}
-
 	public static class Builder {
 
 		public Builder analyticsKey(String analyticsKey) {
