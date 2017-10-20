@@ -26,12 +26,22 @@ public class AnalyticsMessageBuilder {
 		return new AnalyticsMessageBuilder();
 	}
 
+	public AnalyticsMessageBuilder addEvent(Event event) {
+		_analyticsMessage.addEvent(event);
+
+		return this;
+	}
+
 	public AnalyticsMessage build() {
 		return _analyticsMessage;
 	}
 
 	public ContextBuilder newContextBuilder() {
 		return new ContextBuilder();
+	}
+
+	public EventBuilder newEventBuilder() {
+		return new EventBuilder();
 	}
 
 	public ReferrerBuilder newReferrerBuilder() {
@@ -70,12 +80,6 @@ public class AnalyticsMessageBuilder {
 
 	public AnalyticsMessageBuilder setContext(Context context) {
 		_analyticsMessage.setContext(context);
-
-		return this;
-	}
-
-	public AnalyticsMessageBuilder setEvent(Event event) {
-		_analyticsMessage.addEvent(event);
 
 		return this;
 	}
@@ -129,6 +133,8 @@ public class AnalyticsMessageBuilder {
 		}
 
 		private ContextBuilder() {
+
+			_context = new Context();
 		}
 
 		private Context _context;
@@ -137,14 +143,20 @@ public class AnalyticsMessageBuilder {
 
 	public class EventBuilder {
 
-		public Event build() {
-			return _event;
-		}
-
-		public EventBuilder seReferrers(List<Referrer> referrers) {
-			_event.setReferrers(referrers);
+		public EventBuilder addProperty(String key, String value) {
+			_event.addProperty(key, value);
 
 			return this;
+		}
+
+		public EventBuilder addReferrer(Referrer referrer) {
+			_event.addReferrer(referrer);
+
+			return this;
+		}
+
+		public Event build() {
+			return _event;
 		}
 
 		public EventBuilder setAdditionalInfo(String additionalInfo) {

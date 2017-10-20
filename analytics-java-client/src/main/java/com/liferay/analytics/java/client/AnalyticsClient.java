@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 public class AnalyticsClient {
 
 	public Response sendAnalytics(
-		AnalyticsEventsMessage analyticsEventsMessage) {
+		AnalyticsMessage analyticsEventsMessage) {
 
 		WebTarget webTarget = _client.target(_ANALYTICS_GATEWAY_URL);
 

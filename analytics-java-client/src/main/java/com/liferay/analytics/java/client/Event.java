@@ -17,6 +17,8 @@ package com.liferay.analytics.java.client;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -47,10 +49,18 @@ public final class Event {
 	}
 
 	public Date getTimestamp() {
-		return _timestamp;
+		return (Date)_timestamp.clone();
 	}
 
 	protected Event() {
+	}
+
+	protected void addProperty(String key, String value) {
+		_properties.put(key, value);
+	}
+
+	protected void addReferrer(Referrer referrer) {
+		_referrers.add(referrer);
 	}
 
 	protected void setAdditionalInfo(String additionalInfo) {
@@ -61,12 +71,12 @@ public final class Event {
 		_event = event;
 	}
 
-	protected void setReferrers(List<Referrer> referrers) {
-		_referrers = referrers;
-	}
-
 	protected void setTimestamp(Date timestamp) {
-		_timestamp = timestamp;
+		if (timestamp == null) {
+			timestamp = new Timestamp(System.currentTimeMillis());
+		}
+
+		_timestamp = new Timestamp(timestamp.getTime());
 	}
 
 	private String _additionalInfo;
