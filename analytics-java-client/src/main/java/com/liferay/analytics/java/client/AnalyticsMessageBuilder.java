@@ -133,11 +133,10 @@ public class AnalyticsMessageBuilder {
 		}
 
 		private ContextBuilder() {
-
 			_context = new Context();
 		}
 
-		private Context _context;
+		private final Context _context;
 
 	}
 
