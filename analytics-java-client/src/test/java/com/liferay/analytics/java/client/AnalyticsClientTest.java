@@ -30,35 +30,35 @@ public class AnalyticsClientTest {
 
 	@Test
 	public void testAnalyticsEventCreation() {
-		AnalyticsEventsMessage.Builder analyticsEventsMessageBuilder =
-			new AnalyticsEventsMessage.Builder();
+		AnalyticsMessageBuilder analyticsMessageBuilder =
+			AnalyticsMessageBuilder.builder();
 
-		analyticsEventsMessageBuilder.analyticsKey("WXYZ");
-		analyticsEventsMessageBuilder.applicationId("AT");
-		analyticsEventsMessageBuilder.channel("web");
-		analyticsEventsMessageBuilder.messageFormat("AT");
+		analyticsMessageBuilder.setAnalyticsKey("WXYZ");
+		analyticsMessageBuilder.setApplicationId("AT");
+		analyticsMessageBuilder.setChannel("web");
+		analyticsMessageBuilder.setMessageFormat("AT");
 
-		AnalyticsEventsMessage.Context.Builder contextBuilder =
-			AnalyticsEventsMessage.Context.builder();
+		AnalyticsMessageBuilder.ContextBuilder contextBuilder =
+			analyticsMessageBuilder.newContextBuilder();
 
-		contextBuilder.instanceId(1234);
-		contextBuilder.languageId("en_US");
-		contextBuilder.url("http://www.liferay.com");
-		contextBuilder.userId(1234);
+		contextBuilder.setInstanceId(1234);
+		contextBuilder.setLanguageId("en_US");
+		contextBuilder.setUrl("http://www.liferay.com");
+		contextBuilder.setUserId(1234);
 
-		analyticsEventsMessageBuilder.context(contextBuilder.build());
+		analyticsMessageBuilder.setContext(contextBuilder.build());
 
-		AnalyticsEventsMessage.Event.Builder eventBuilder =
-			AnalyticsEventsMessage.Event.builder();
+		AnalyticsMessageBuilder.EventBuilder eventBuilder =
+			analyticsMessageBuilder.newEventBuilder();
 
-		eventBuilder.event("view");
-		eventBuilder.property("elementId", "banner1");
-		eventBuilder.timestamp(new Date());
+		eventBuilder.setEvent("view");
+		eventBuilder.addProperty("elementId", "banner1");
+		eventBuilder.setTimestamp(new Date());
 
-		analyticsEventsMessageBuilder.event(eventBuilder.build());
+		analyticsMessageBuilder.addEvent(eventBuilder.build());
 
 		Response response = _analyticsClient.sendAnalytics(
-			analyticsEventsMessageBuilder.build());
+			analyticsMessageBuilder.build());
 
 		Assert.assertEquals(HttpStatus.SC_OK, response.getStatus());
 	}

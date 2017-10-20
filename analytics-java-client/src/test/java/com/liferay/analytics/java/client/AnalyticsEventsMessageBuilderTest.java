@@ -37,7 +37,7 @@ public class AnalyticsEventsMessageBuilderTest {
 		String expectedURL = "http://www.liferay.com";
 		long expectedUserId = 456;
 
-		AnalyticsEventsMessage.Context actualContext = createContext(
+		Context actualContext = createContext(
 			expectedInstanceId, expectedLanguageId, expectedURL,
 			expectedUserId);
 
@@ -57,21 +57,20 @@ public class AnalyticsEventsMessageBuilderTest {
 		expectedProperties.put("k2", "v2");
 		expectedProperties.put("k3", "v3");
 
-		List<AnalyticsEventsMessage.Referrer> expectedReferrers =
-			new ArrayList<>();
+		List<Referrer> expectedReferrers = new ArrayList<>();
 
 		List<String> expectedReferrerEntityIds = Arrays.asList("1", "2", "3");
 
 		String expectedReferrerEntityType = "EntityType";
 
-		AnalyticsEventsMessage.Referrer expectedReferrer = createReferrer(
+		Referrer expectedReferrer = createReferrer(
 			expectedReferrerEntityIds, expectedReferrerEntityType);
 
 		expectedReferrers.add(expectedReferrer);
 
 		Date expectedTimestamp = new Date();
 
-		AnalyticsEventsMessage.Event actualEvent = createEvent(
+		Event actualEvent = createEvent(
 			expectedAdditionalInfo, expectedEvent, expectedProperties,
 			expectedReferrers, expectedTimestamp);
 
@@ -85,12 +84,12 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		// Context
 
-		AnalyticsEventsMessage.Context expectedContext = createContext(
+		Context expectedContext = createContext(
 			123, "en_US", "http://www.liferay.com", 456);
 
 		// Events
 
-		List<AnalyticsEventsMessage.Event> expectedEvents = new ArrayList<>();
+		List<Event> expectedEvents = new ArrayList<>();
 
 		String expectedAdditionalInfo = "AdditionalInfo";
 		String expectedEventName = "view";
@@ -99,8 +98,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		expectedProperties.put("k1", "v1");
 
-		List<AnalyticsEventsMessage.Referrer> expectedReferrers =
-			new ArrayList<>();
+		List<Referrer> expectedReferrers = new ArrayList<>();
 
 		expectedReferrers.add(
 			createReferrer(Arrays.asList("1", "2", "3"), "EntityType"));
@@ -122,7 +120,7 @@ public class AnalyticsEventsMessageBuilderTest {
 		String expectedProtocolVersion = "1.0.0";
 		String expectedUserAgent = "UserAgent";
 
-		AnalyticsEventsMessage actualAnalyticsEventsMessage =
+		AnalyticsMessage actualAnalyticsEventsMessage =
 			createAnalyticsEventsMessage(
 				expectedAnalyticsKey, expectedAnonymousUserId,
 				expectedApplicationId, expectedClientIP, expectedContext,
@@ -146,8 +144,7 @@ public class AnalyticsEventsMessageBuilderTest {
 			expectedContext.getURL(), expectedContext.getUserId(),
 			actualAnalyticsEventsMessage.getContext());
 
-		List<AnalyticsEventsMessage.Event> actualEvents =
-			actualAnalyticsEventsMessage.getEvents();
+		List<Event> actualEvents = actualAnalyticsEventsMessage.getEvents();
 
 		Assert.assertEquals(
 			expectedEvents.toString(), expectedEvents.size(),
@@ -155,7 +152,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		int i = 0;
 
-		for (AnalyticsEventsMessage.Event expectedEvent : expectedEvents) {
+		for (Event expectedEvent : expectedEvents) {
 			assertEvent(
 				expectedEvent.getAdditionalInfo(), expectedEvent.getEvent(),
 				expectedEvent.getProperties(), expectedEvent.getReferrers(),
@@ -178,7 +175,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		String expectedReferrerEntityType = "EntityType";
 
-		AnalyticsEventsMessage.Referrer referrer = createReferrer(
+		Referrer referrer = createReferrer(
 			expectedReferrerEntityIds, expectedReferrerEntityType);
 
 		assertReferrer(
@@ -187,7 +184,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 	protected void assertContext(
 		long expectedInstanceId, String expectedLanguageId, String expectedURL,
-		long expectedUserId, AnalyticsEventsMessage.Context actualContext) {
+		long expectedUserId, Context actualContext) {
 
 		Assert.assertEquals(expectedInstanceId, actualContext.getInstanceId());
 		Assert.assertEquals(expectedLanguageId, actualContext.getLanguageId());
@@ -198,16 +195,15 @@ public class AnalyticsEventsMessageBuilderTest {
 	protected void assertEvent(
 		String expectedAdditionalInfo, String expectedEvent,
 		Map<String, String> expectedProperties,
-		List<AnalyticsEventsMessage.Referrer> expectedReferrers,
-		Date expectedTimestamp, AnalyticsEventsMessage.Event actualEvent) {
+		List<Referrer> expectedReferrers, Date expectedTimestamp,
+		Event actualEvent) {
 
 		Assert.assertEquals(
 			expectedAdditionalInfo, actualEvent.getAdditionalInfo());
 		Assert.assertEquals(expectedEvent, actualEvent.getEvent());
 		Assert.assertEquals(expectedProperties, actualEvent.getProperties());
 
-		List<AnalyticsEventsMessage.Referrer> actualReferrers =
-			actualEvent.getReferrers();
+		List<Referrer> actualReferrers = actualEvent.getReferrers();
 
 		Assert.assertEquals(
 			expectedReferrers.toString(), expectedReferrers.size(),
@@ -215,9 +211,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		int i = 0;
 
-		for (AnalyticsEventsMessage.Referrer expectedReferrer :
-				expectedReferrers) {
-
+		for (Referrer expectedReferrer : expectedReferrers) {
 			assertReferrer(
 				expectedReferrer.getReferrerEntityIds(),
 				expectedReferrer.getReferrerEntityType(),
@@ -229,8 +223,7 @@ public class AnalyticsEventsMessageBuilderTest {
 
 	protected void assertReferrer(
 		List<String> expectedReferrerEntityIds,
-		String expectedReferrerEntityType,
-		AnalyticsEventsMessage.Referrer actualReferrer) {
+		String expectedReferrerEntityType, Referrer actualReferrer) {
 
 		Assert.assertEquals(
 			expectedReferrerEntityIds, actualReferrer.getReferrerEntityIds());
@@ -238,77 +231,85 @@ public class AnalyticsEventsMessageBuilderTest {
 			expectedReferrerEntityType, actualReferrer.getReferrerEntityType());
 	}
 
-	protected AnalyticsEventsMessage createAnalyticsEventsMessage(
+	protected AnalyticsMessage createAnalyticsEventsMessage(
 		String analyticsKey, long anonymousUserId, String applicationId,
-		String clientIP, AnalyticsEventsMessage.Context context,
-		List<AnalyticsEventsMessage.Event> events, String messageFormat,
-		String protocolVersion, String userAgent) {
+		String clientIP, Context context, List<Event> events,
+		String messageFormat, String protocolVersion, String userAgent) {
 
-		AnalyticsEventsMessage.Builder messageBuilder =
-			AnalyticsEventsMessage.builder();
+		AnalyticsMessageBuilder messageBuilder =
+			AnalyticsMessageBuilder.builder();
 
-		messageBuilder.analyticsKey(analyticsKey);
-		messageBuilder.anonymousUserId(anonymousUserId);
-		messageBuilder.applicationId(applicationId);
-		messageBuilder.clientIP(clientIP);
-		messageBuilder.context(context);
+		messageBuilder.setAnalyticsKey(analyticsKey);
+		messageBuilder.setAnonymousUserId(anonymousUserId);
+		messageBuilder.setApplicationId(applicationId);
+		messageBuilder.setClientIP(clientIP);
+		messageBuilder.setContext(context);
 
-		for (AnalyticsEventsMessage.Event event : events) {
-			messageBuilder.event(event);
+		for (Event event : events) {
+			messageBuilder.addEvent(event);
 		}
 
-		messageBuilder.messageFormat(messageFormat);
-		messageBuilder.protocolVersion(protocolVersion);
-		messageBuilder.userAgent(userAgent);
+		messageBuilder.setMessageFormat(messageFormat);
+		messageBuilder.setProtocolVersion(protocolVersion);
+		messageBuilder.setUserAgent(userAgent);
 
 		return messageBuilder.build();
 	}
 
-	protected AnalyticsEventsMessage.Context createContext(
+	protected Context createContext(
 		long instanceId, String languageId, String url, long userId) {
 
-		AnalyticsEventsMessage.Context.Builder contextBuilder =
-			AnalyticsEventsMessage.Context.builder();
+		AnalyticsMessageBuilder messageBuilder =
+			AnalyticsMessageBuilder.builder();
 
-		contextBuilder.instanceId(instanceId);
-		contextBuilder.languageId(languageId);
-		contextBuilder.url(url);
-		contextBuilder.userId(userId);
+		AnalyticsMessageBuilder.ContextBuilder contextBuilder =
+			messageBuilder.newContextBuilder();
+
+		contextBuilder.setInstanceId(instanceId);
+		contextBuilder.setLanguageId(languageId);
+		contextBuilder.setUrl(url);
+		contextBuilder.setUserId(userId);
 
 		return contextBuilder.build();
 	}
 
-	protected AnalyticsEventsMessage.Event createEvent(
+	protected Event createEvent(
 		String additionalInfo, String event, Map<String, String> properties,
-		List<AnalyticsEventsMessage.Referrer> referrers, Date timestamp) {
+		List<Referrer> referrers, Date timestamp) {
 
-		AnalyticsEventsMessage.Event.Builder eventBuilder =
-			AnalyticsEventsMessage.Event.builder();
+		AnalyticsMessageBuilder messageBuilder =
+			AnalyticsMessageBuilder.builder();
 
-		eventBuilder.additionalInfo(additionalInfo);
-		eventBuilder.event(event);
+		AnalyticsMessageBuilder.EventBuilder eventBuilder =
+			messageBuilder.newEventBuilder();
+
+		eventBuilder.setAdditionalInfo(additionalInfo);
+		eventBuilder.setEvent(event);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			eventBuilder.property(entry.getKey(), entry.getValue());
+			eventBuilder.addProperty(entry.getKey(), entry.getValue());
 		}
 
-		for (AnalyticsEventsMessage.Referrer referrer : referrers) {
-			eventBuilder.referrer(referrer);
+		for (Referrer referrer : referrers) {
+			eventBuilder.addReferrer(referrer);
 		}
 
-		eventBuilder.timestamp(timestamp);
+		eventBuilder.setTimestamp(timestamp);
 
 		return eventBuilder.build();
 	}
 
-	protected AnalyticsEventsMessage.Referrer createReferrer(
+	protected Referrer createReferrer(
 		List<String> referrerEntityIds, String referrerEntityType) {
 
-		AnalyticsEventsMessage.Referrer.Builder referrerBuilder =
-			AnalyticsEventsMessage.Referrer.builder();
+		AnalyticsMessageBuilder messageBuilder =
+			AnalyticsMessageBuilder.builder();
 
-		referrerBuilder.referrerEntityIds(referrerEntityIds);
-		referrerBuilder.referrerEntityType(referrerEntityType);
+		AnalyticsMessageBuilder.ReferrerBuilder referrerBuilder =
+			messageBuilder.newReferrerBuilder();
+
+		referrerBuilder.setReferrerEntityIds(referrerEntityIds);
+		referrerBuilder.setReferrerEntityType(referrerEntityType);
 
 		return referrerBuilder.build();
 	}
