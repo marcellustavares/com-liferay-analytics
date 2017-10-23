@@ -16,7 +16,7 @@ package com.liferay.analytics.java.client;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -32,10 +32,6 @@ import java.util.Map;
  * @see com.liferay.lcs.messaging.AnalyticsEventsMessage
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "messageFormat",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
 public class AnalyticsEventsMessage implements Serializable {
 
 	public static AnalyticsEventsMessage.Builder builder() {
@@ -214,9 +210,16 @@ public class AnalyticsEventsMessage implements Serializable {
 		private Context() {
 		}
 
+		@JsonProperty("instanceId")
 		private long _instanceId;
+
+		@JsonProperty("languageId")
 		private String _languageId;
+
+		@JsonProperty("url")
 		private String _url;
+
+		@JsonProperty("userId")
 		private long _userId;
 
 	}
@@ -292,15 +295,23 @@ public class AnalyticsEventsMessage implements Serializable {
 		private Event() {
 		}
 
+		@JsonProperty("additionalInfo")
 		private String _additionalInfo;
+
+		@JsonProperty("event")
 		private String _event;
+
+		@JsonProperty("properties")
 		private final Map<String, String> _properties = new HashMap<>();
+
+		@JsonProperty("referrers")
 		private List<Referrer> _referrers = new ArrayList<>();
 
 		@JsonFormat(
 			pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
 			shape = JsonFormat.Shape.STRING, timezone = "UTC"
 		)
+		@JsonProperty("timestamp")
 		private Date _timestamp;
 
 	}
@@ -350,7 +361,10 @@ public class AnalyticsEventsMessage implements Serializable {
 		private Referrer() {
 		}
 
-		private List<String> _referrerEntityIds = Collections.emptyList();
+		@JsonProperty("referrerEntityIds")
+		private List<String> _referrerEntityIds = new ArrayList<>();
+
+		@JsonProperty("referrerEntityType")
 		private String _referrerEntityType;
 
 	}
@@ -358,15 +372,34 @@ public class AnalyticsEventsMessage implements Serializable {
 	private AnalyticsEventsMessage() {
 	}
 
+	@JsonProperty("analyticsKey")
 	private String _analyticsKey;
+
+	@JsonProperty("anonymousUserId")
 	private long _anonymousUserId;
+
+	@JsonProperty("applicationId")
 	private String _applicationId;
+
+	@JsonProperty("channel")
 	private String _channel;
+
+	@JsonProperty("clientIP")
 	private String _clientIP;
+
+	@JsonProperty("context")
 	private Context _context;
+
+	@JsonProperty("events")
 	private final List<Event> _events = new ArrayList<>();
+
+	@JsonProperty("messageFormat")
 	private String _messageFormat;
+
+	@JsonProperty("protocolVersion")
 	private String _protocolVersion;
+
+	@JsonProperty("userAgent")
 	private String _userAgent;
 
 }
