@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.analytics.internal.messaging;
+package com.liferay.analytics.messaging.internal.messaging;
 
 import com.liferay.analytics.java.client.AnalyticsClient;
 import com.liferay.analytics.java.client.AnalyticsEventsMessage;
-import com.liferay.portal.analytics.constants.AnalyticsDestinationNames;
+import com.liferay.analytics.messaging.constants.AnalyticsDestinationNames;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;

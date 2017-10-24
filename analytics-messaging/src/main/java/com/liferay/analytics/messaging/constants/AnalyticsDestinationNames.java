@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.analytics.constants;
+package com.liferay.analytics.messaging.constants;
 
 /**
  * @author Marcellus Tavares

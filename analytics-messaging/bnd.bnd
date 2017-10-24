@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Analytics Messaging
+Bundle-SymbolicName: com.liferay.analytics.messaging
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.analytics.messaging.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Analytics

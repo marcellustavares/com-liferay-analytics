@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.analytics.internal.messaging;
+package com.liferay.analytics.messaging.internal.messaging;
 
-import com.liferay.portal.analytics.constants.AnalyticsDestinationNames;
+import com.liferay.analytics.messaging.constants.AnalyticsDestinationNames;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
