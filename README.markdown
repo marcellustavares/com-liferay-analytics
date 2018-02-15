@@ -1,4 +1,4 @@
-# Analytics Clients
+# Analytics Clients.
 
 ## Generic Java Client
 
