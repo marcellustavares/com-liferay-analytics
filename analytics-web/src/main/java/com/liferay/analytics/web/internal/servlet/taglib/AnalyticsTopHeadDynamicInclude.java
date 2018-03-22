@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.web.internal.servlet.taglib;
 
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -46,7 +46,7 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 			WebKeys.THEME_DISPLAY);
 
 		_portal.setPageKeywords(
-			AssetUtil.getAssetKeywords(
+			_assetHelper.getAssetKeywords(
 				Layout.class.getName(), themeDisplay.getPlid()),
 			request);
 	}
@@ -55,6 +55,9 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private Portal _portal;
