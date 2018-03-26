@@ -42,8 +42,8 @@ module.exports = function(config) {
 		reporters: ['progress', 'coverage-istanbul'],
 
 		coverageIstanbulReporter: {
-			dir: path.join(__dirname, 'test-coverage'),
-			reports: ['html', 'lcovonly', 'text-summary']
+		 	dir: path.join(__dirname, 'test-coverage'),
+		  	reports: ['html', 'lcovonly', 'text-summary']
 		},
 
 		webpack: webpack,
