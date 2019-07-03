@@ -80,6 +80,7 @@ class Client {
 			context,
 			dataSourceId,
 			events,
+			groupId: themeDisplay ? themeDisplay.getScopeGroupIdOrLiveGroupId() : null,
 			protocolVersion: '1.0',
 			userId
 		};
