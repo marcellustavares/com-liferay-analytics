@@ -19,7 +19,7 @@ package com.liferay.analytics.web.internal.constants;
  */
 public class AnalyticsWebKeys {
 
-	public static final String ANALYTICS_CLIENT_CONFIG_KEY =
-		"ANALYTICS_CLIENT_CONFIG_KEY";
+	public static final String ANALYTICS_CLIENT_CONFIG =
+		"ANALYTICS_CLIENT_CONFIG";
 
 }

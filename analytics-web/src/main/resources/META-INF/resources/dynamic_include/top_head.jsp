@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG_KEY);
+String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG);
 %>
 
 <script data-senna-track="temporary" type="text/javascript">

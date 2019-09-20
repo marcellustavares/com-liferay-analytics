@@ -72,7 +72,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			getLiferayAnalyticsEndpointURL(themeDisplay.getCompany()));
 
 		httpServletRequest.setAttribute(
-			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG_KEY,
+			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
 			serialize(analyticsClientConfig));
 
 		super.include(httpServletRequest, httpServletResponse, key);
