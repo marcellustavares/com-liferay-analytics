@@ -56,9 +56,11 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if (!isAnalyticsTrackingEnabled(httpServletRequest, themeDisplay)) {
+		if (!_isAnalyticsTrackingEnabled(httpServletRequest, themeDisplay)) {
 			return;
 		}
 
@@ -66,14 +68,14 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		analyticsClientConfig.put(
 			"dataSourceId",
-			getLiferayAnalyticsDataSourceId(themeDisplay.getCompany()));
+			_getLiferayAnalyticsDataSourceId(themeDisplay.getCompany()));
 		analyticsClientConfig.put(
 			"endpointUrl",
-			getLiferayAnalyticsEndpointURL(themeDisplay.getCompany()));
+			_getLiferayAnalyticsEndpointURL(themeDisplay.getCompany()));
 
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
-			serialize(analyticsClientConfig));
+			_serialize(analyticsClientConfig));
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
@@ -91,29 +93,31 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return "/dynamic_include/top_head.jsp";
 	}
 
-	protected String getLiferayAnalyticsDataSourceId(Company company) {
-		return PrefsPropsUtil.getString(
-			company.getCompanyId(), "liferayAnalyticsDataSourceId");
-	}
-
-	protected String getLiferayAnalyticsEndpointURL(Company company) {
-		return PrefsPropsUtil.getString(
-			company.getCompanyId(), "liferayAnalyticsEndpointURL");
-	}
-
 	@Override
 	protected Log getLog() {
 		return _log;
 	}
 
-	protected ThemeDisplay getThemeDisplay(
-		HttpServletRequest httpServletRequest) {
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.analytics.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
-	protected boolean isAnalyticsTrackingEnabled(
+	private String _getLiferayAnalyticsDataSourceId(Company company) {
+		return PrefsPropsUtil.getString(
+			company.getCompanyId(), "liferayAnalyticsDataSourceId");
+	}
+
+	private String _getLiferayAnalyticsEndpointURL(Company company) {
+		return PrefsPropsUtil.getString(
+			company.getCompanyId(), "liferayAnalyticsEndpointURL");
+	}
+
+	private boolean _isAnalyticsTrackingEnabled(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		Layout layout = themeDisplay.getLayout();
@@ -128,8 +132,8 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		Company company = themeDisplay.getCompany();
 
-		if (Validator.isNull(getLiferayAnalyticsDataSourceId(company)) ||
-			Validator.isNull(getLiferayAnalyticsEndpointURL(company))) {
+		if (Validator.isNull(_getLiferayAnalyticsDataSourceId(company)) ||
+			Validator.isNull(_getLiferayAnalyticsEndpointURL(company))) {
 
 			return false;
 		}
@@ -144,7 +148,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			company.getCompanyId(), "liferayAnalyticsGroupIds",
 			StringPool.COMMA);
 
-		if (isSharedFormEnabled(
+		if (_isSharedFormEnabled(
 				liferayAnalyticsGroupIds, layout.getGroup(),
 				httpServletRequest)) {
 
@@ -166,7 +170,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return false;
 	}
 
-	protected boolean isSharedFormEnabled(
+	private boolean _isSharedFormEnabled(
 		String[] liferayAnalyticsGroupIds, Group group,
 		HttpServletRequest httpServletRequest) {
 
@@ -180,7 +184,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return false;
 	}
 
-	protected String serialize(Map<String, String> map) {
+	private String _serialize(Map<String, String> map) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -188,15 +192,6 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		}
 
 		return jsonObject.toString();
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.analytics.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
