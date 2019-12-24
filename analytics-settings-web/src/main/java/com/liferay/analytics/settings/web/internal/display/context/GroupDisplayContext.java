@@ -63,11 +63,6 @@ public class GroupDisplayContext {
 		groupSearch.setOrderByCol(_getOrderByCol());
 		groupSearch.setOrderByType(getOrderByType());
 
-		groupSearch.setRowChecker(
-			new GroupChecker(
-				_renderResponse,
-				SetUtil.fromArray(_analyticsConfiguration.syncedGroupIds())));
-
 		List<Group> groups = Collections.emptyList();
 
 		try {
@@ -81,6 +76,11 @@ public class GroupDisplayContext {
 		}
 
 		groupSearch.setResults(groups);
+
+		groupSearch.setRowChecker(
+			new GroupChecker(
+				_renderResponse,
+				SetUtil.fromArray(_analyticsConfiguration.syncedGroupIds())));
 
 		int total = GroupServiceUtil.searchCount(
 			_getCompanyId(), _getClassNameIds(), _getKeywords(),
