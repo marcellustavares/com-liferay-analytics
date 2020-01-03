@@ -20,11 +20,12 @@
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 
 boolean connected = false;
-GroupDisplayContext groupDisplayContext = new GroupDisplayContext(renderRequest, renderResponse);
 
 if (!Validator.isBlank(analyticsConfiguration.token())) {
 	connected = true;
 }
+
+GroupDisplayContext groupDisplayContext = new GroupDisplayContext(renderRequest, renderResponse);
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />

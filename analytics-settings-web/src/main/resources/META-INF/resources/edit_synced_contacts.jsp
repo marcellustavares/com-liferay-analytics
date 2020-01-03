@@ -20,13 +20,14 @@
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 
 boolean connected = false;
-boolean syncAllContacts = analyticsConfiguration.syncAllContacts();
-Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syncedOrganizationIds());
-Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
 
 if (!Validator.isBlank(analyticsConfiguration.token())) {
 	connected = true;
 }
+
+boolean syncAllContacts = analyticsConfiguration.syncAllContacts();
+Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syncedOrganizationIds());
+Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
 %>
 
 <liferay-util:html-top>
