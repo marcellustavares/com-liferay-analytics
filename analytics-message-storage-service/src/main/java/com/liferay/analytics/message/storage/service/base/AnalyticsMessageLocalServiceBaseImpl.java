@@ -74,7 +74,7 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 	implements AnalyticsMessageLocalService, AopService,
 			   IdentifiableOSGiService {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>AnalyticsMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.analytics.message.storage.service.AnalyticsMessageLocalServiceUtil</code>.

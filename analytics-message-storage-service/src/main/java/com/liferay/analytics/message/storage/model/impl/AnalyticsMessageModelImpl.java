@@ -62,7 +62,7 @@ import java.util.function.Function;
 public class AnalyticsMessageModelImpl
 	extends BaseModelImpl<AnalyticsMessage> implements AnalyticsMessageModel {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a analytics message model instance should use the <code>AnalyticsMessage</code> interface instead.

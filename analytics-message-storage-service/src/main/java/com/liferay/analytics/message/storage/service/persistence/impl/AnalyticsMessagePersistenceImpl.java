@@ -68,7 +68,7 @@ public class AnalyticsMessagePersistenceImpl
 	extends BasePersistenceImpl<AnalyticsMessage>
 	implements AnalyticsMessagePersistence {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>AnalyticsMessageUtil</code> to access the analytics message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
