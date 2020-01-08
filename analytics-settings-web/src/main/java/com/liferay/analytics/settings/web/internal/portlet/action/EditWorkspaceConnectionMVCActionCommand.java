@@ -185,7 +185,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 		}
 
 		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-			throw new PortalException("Failed to disconnected data source");
+			throw new PortalException("Unable to disconnect data source");
 		}
 
 		return false;
